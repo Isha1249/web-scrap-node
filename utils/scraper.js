@@ -29,7 +29,10 @@ const scrapeWebsite = async (url) => {
       email = email.replace(/\s+/g, ' ');
     }
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     const page = await browser.newPage();
     await page.goto(url);
     const screenshot = await page.screenshot({ encoding: 'base64' });
@@ -37,7 +40,7 @@ const scrapeWebsite = async (url) => {
 
     return { url,name, description, companyLogo, facebook, linkedin, twitter, instagram, address, phone, email, screenshot };
   } catch (error) {
-    console.error(error);
+    console.error('Error scraping website:', error);
     return null;
   }
 };
