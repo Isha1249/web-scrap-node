@@ -28,7 +28,7 @@ const scrapeWebsite = async (url) => {
     } else if (email.includes('@')) {
       email = email.replace(/\s+/g, ' ');
     }
-
+    console.log(`Starting to scrape: ${url}`);
     const browser = await puppeteer.launch({
       headless: true ,
       executablePath: process.env.CHROME_EXECUTABLE_PATH,
@@ -36,8 +36,14 @@ const scrapeWebsite = async (url) => {
 
     });
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+    console.log(`Navigating to: ${url}`);
+    await page.goto(url, { waitUntil: 'networkidle2' });
+
+    console.log(`Page loaded: ${url}`);
+    await page.waitForSelector('body')
     const screenshot = await page.screenshot({ encoding: 'base64' });
+    console.log('Screenshot taken');
     await browser.close();
 
     return { url,name, description, companyLogo, facebook, linkedin, twitter, instagram, address, phone, email, screenshot };
