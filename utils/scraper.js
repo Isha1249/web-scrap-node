@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
-
+require('dotenv').config(); 
 const scrapeWebsite = async (url) => {
   try {
     const { data } = await axios.get(url);
@@ -30,8 +30,8 @@ const scrapeWebsite = async (url) => {
     }
 
     const browser = await puppeteer.launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      executablePath: process.env.CHROME_EXECUTABLE_PATH,
+      headless: true 
     });
     const page = await browser.newPage();
     await page.goto(url);
