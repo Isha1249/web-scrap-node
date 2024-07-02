@@ -30,8 +30,11 @@ const scrapeWebsite = async (url) => {
     }
 
     const browser = await puppeteer.launch({
+      headless: true ,
       executablePath: process.env.CHROME_EXECUTABLE_PATH,
-      headless: true 
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath: '/usr/bin/chromium-browser'
+
     });
     const page = await browser.newPage();
     await page.goto(url);
