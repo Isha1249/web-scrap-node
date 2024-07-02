@@ -33,7 +33,6 @@ const scrapeWebsite = async (url) => {
       headless: true ,
       executablePath: process.env.CHROME_EXECUTABLE_PATH,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      executablePath: '/usr/bin/chromium-browser'
 
     });
     const page = await browser.newPage();
