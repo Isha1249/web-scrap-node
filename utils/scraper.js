@@ -28,12 +28,7 @@ const scrapeWebsite = async (url) => {
     } else if (email.includes('@')) {
       email = email.replace(/\s+/g, ' ');
     }
-    const browser = await puppeteer.launch({
-      headless: true ,
-      executablePath: process.env.CHROME_EXECUTABLE_PATH,
-      //args: ['--no-sandbox', '--disable-setuid-sandbox'],
-
-    });
+    const browser = await puppeteer.launch()
     const page = await browser.newPage();
     await page.goto(url);
     const screenshot = await page.screenshot({ encoding: 'base64' });
