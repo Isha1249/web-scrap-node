@@ -86,7 +86,7 @@ const deleteCompanies = async (req, res) => {
         { _id: { $in: ids } },
         { $set: { deletedAt: new Date() } }
         );
-        res.status(200).json({ status:true,message: 'Companies deleted' });
+        res.status(200).json({ status:true,message: 'Deleteion Successfull' });
     }catch (error) {
         res.status(500).json({
             status: false,

@@ -16,18 +16,19 @@ const scrapeWebsite = async (url) => {
     const instagram = $('a[href*="instagram.com"]').attr('href');
     let address = $('address').text() || $('div[class*="address"]').text() || $('span[class*="address"]').text();
     address = address.trim().replace(/\s+/g, ' ');
-
+    address = address ? address : null;
     let phone = $('a[href^="tel:"]').first().text().trim();
     if (phone.includes('\n')) {
       phone = phone.split('\n').map(line => line.trim()).filter(line => line !== '').join(', ');
     }
-
+    phone = phone ? phone : null;
     let email = $('a[href^="mailto:"]').first().text().trim();
     if (email.includes('\n')) {
       email = email.split('\n').map(line => line.trim()).filter(line => line !== '').join(', ');
     } else if (email.includes('@')) {
       email = email.replace(/\s+/g, ' ');
     }
+    email = email ? email : null;
     const browser = await puppeteer.launch()
     const page = await browser.newPage();
     await page.goto(url);
